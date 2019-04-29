@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Cardio 💪💪</title>
+</head>
+<style>
+  .answer{
+    background: rgb(235, 235, 235);
+  }
+</style>
+<body>
+  <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+  <br>
+  <p>Array.prototype.some() : is at least one person 19 or older?</p>
+  <div id="1" class="answer"></div>
+  <br>
+  <p>Array.prototype.every() : is everyone 19 or older?</p>
+  <div id="2" class="answer"></div>
+  <br>
+  <p>Array.prototype.find()</p>
+  <p>find the comment with the ID of 823423</p>
+  <div id="3" class="answer"></div>
+  <br>
+  <p>Array.prototype.findIndex()</p>
+  <p>Find the comment with this ID</p>
+  <div id="4a" class="answer"></div>
+  <p>delete the comment with the ID of 823423</p>
+  <div id="4b" class="answer"></div>
+  <br>
+
+  <script>
+    // ## Array Cardio Day 2
+
+    const people = [
+      { name: 'Wes', year: 1988 },
+      { name: 'Kait', year: 1986 },
+      { name: 'Irv', year: 1970 },
+      { name: 'Lux', year: 2015 }
+    ];
+
+    const comments = [
+      { text: 'Love this!', id: 523423 },
+      { text: 'Super good', id: 823423 },
+      { text: 'You are the best', id: 2039842 },
+      { text: 'Ramen is my fav food ever', id: 123523 },
+      { text: 'Nice Nice Nice!', id: 542328 }
+    ];
+
+    // Some and Every Checks
+    // Array.prototype.some() // is at least one person 19 or older?
+    const some = people.some((p)=>{
+      const currentYear = new Date().getFullYear();
+      return currentYear - p.year >= 19
+    })
+    console.log({some})
+
+    const render = (selectorID, method) =>{
+        let txt = document.getElementById(selectorID);
+        let p = document.createElement("P");
+        p.innerText= method
+        txt.appendChild(p)
+    }
+    render('1', some)
+    // Array.prototype.every() // is everyone 19 or older?
+    const every = people.every((p)=>{
+      const currentYear = new Date().getFullYear();
+      return currentYear - p.year >= 19
+    })
+    console.log({every})
+
+    render('2', every)
+    // Array.prototype.find()
+    // Find is like filter, but instead returns just the one you are looking for
+    // find the comment with the ID of 823423
+    const comment = comments.find(com =>{
+      return com.id === 823423
+    })
+    const renderCom = `Comment ID: ${comment.id} has text: ${comment.text} `
+    
+    console.log(comment)
+    render('3', renderCom)
+    // Array.prototype.findIndex()
+    // Find the comment with this ID
+    const index = comments.findIndex(com =>{
+      return com.id === 823423
+    })
+    renderIndex = `
+      Comment with ID 823423 has index ${index}
+    `
+    console.log({index})
+    render('4a', renderIndex)
+    // delete the comment with the ID of 823423
+    const modComments = [
+      ...comments.slice(0, index),
+      ...comments.slice(index + 1)
+      ]
+    const renderModCom = modComments.map(c=>{
+      return `
+      ${c.text} ${c.id}
+      `
+    }).join('')
+    console.log(modComments)
+    render('4b', renderModCom)
+  </script>
+</body>
+</html>
