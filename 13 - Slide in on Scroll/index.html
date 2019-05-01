@@ -9,7 +9,7 @@
   <div class="site-wrap">
 
     <h1>Slide in on Scroll</h1>
-
+    <h2>Learn about debounce and window scroll events</h2>
     <p>Consectetur adipisicing elit. Tempore tempora rerum, est autem cupiditate, corporis a qui libero ipsum delectus quidem dolor at nulla, adipisci veniam in reiciendis aut asperiores omnis blanditiis quod quas laborum nam! Fuga ad tempora in aspernatur pariaturlores sunt esse magni, ut, dignissimos.</p>
     <p>Lorem ipsum cupiditate, corporis a qui libero ipsum delectus quidem dolor at nulla, adipisci veniam in reiciendis aut asperiores omnis blanditiis quod quas laborum nam! Fuga ad tempora in aspernatur pariatur fugit quibusdam dolores sunt esse magni, ut, dignissimos.</p>
     <p>Adipisicing elit. Tempore tempora rerum..</p>
@@ -43,6 +43,8 @@
   </div>
 
   <script>
+    // Deboounce will improve performance for scrolling and AJAX calls
+    // by reducing the number of times the event listener evaluates the event.
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -57,6 +59,31 @@
         if (callNow) func.apply(context, args);
       };
     }
+
+    const slideImgs = document.querySelectorAll('.slide-in')
+
+    function checkSlide(e){
+      console.count(e)
+      console.log(window.scrollY)
+      slideImgs.forEach(image=>{
+        // get the pixel distance from the bottom
+        // + get the pixel distance at the middle of every image ( / 2)
+        const slideInAt = (window.scrollY + window.innerHeight) - image.height /2
+        console.log(slideInAt)
+        // get the pixel distance from the top and add height to get the bottom of image
+        const imageBottom = image.offsetTop + image.height
+        // Is the image half shown?
+        const isHalfShown = slideInAt > image.offsetTop
+        // Is the image out of screen?
+        const isNotScrolledPast = window.scrollY < imageBottom
+
+        if (isHalfShown && isNotScrolledPast) {
+          image.classList.add('active')
+        } else image.classList.remove('active')
+      })
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide))
 
   </script>
 
