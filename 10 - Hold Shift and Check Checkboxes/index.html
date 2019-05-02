@@ -97,6 +97,7 @@
 
 <script>
   const checkboxes = document.querySelectorAll("input[type=checkbox]");
+  const inbox = document.querySelector(".inbox");
   let lastChecked = null
 
   function handleCheckToggle(e) {
@@ -120,7 +121,28 @@
     lastChecked = this
   }
 
-  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheckToggle));
+  function handleCheck(e){
+    if (!e.target.matches('input'))return
+    let inBetween = false
+    const target = e.target
+    //if (e.shiftKey && target.checked) 
+    const checkboxes = document.querySelectorAll("input[type=checkbox]");
+    if(e.shiftKey && target.checked){
+      //console.log('checkbox', checkbox)
+      checkboxes.forEach(checkbox=>{
+        if(checkbox === target || checkbox === lastChecked) {
+          inBetween = !inBetween
+        }
+        if(inBetween){
+          checkbox.checked=true
+        }
+      })
+    }
+    lastChecked = e.target
+  }
+
+  //checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheckToggle));
+  inbox.addEventListener('click', handleCheck)
 </script>
 </body>
 </html>
