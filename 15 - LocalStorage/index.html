@@ -23,6 +23,7 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <button onclick="checkAll()" >Select All</button>
   </div>
 
 <script>
@@ -63,10 +64,20 @@
 
   function toggleDone(e){
     if(!e.target.matches('input'))return
-    console.log(e.target)
+    console.dir(e.target)
     const el = e.target
     const index = el.dataset.index;
+    //console.log(items[index].done)
     items[index].done = !items[index].done
+    localStorage.setItem('items', JSON.stringify(items))
+    populateList(items, itemsList)
+  }
+
+  function checkAll(e){
+    console.log(items)
+    items.forEach(item => {
+      item.done = true
+    });
     localStorage.setItem('items', JSON.stringify(items))
     populateList(items, itemsList)
   }
