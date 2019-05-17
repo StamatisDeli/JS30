@@ -60,7 +60,7 @@ slider.addEventListener('mousemove', (e)=>{
   if(!isDown) return
   const x= e.pageX - slider.offsetLeft
   const step = x - startX
-  console.log(step)
+  console.log(slider.scrollLeft)
   slider.scrollLeft= scrollLeft-step
 })
 
